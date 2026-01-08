@@ -1,0 +1,419 @@
+@import "tailwindcss";
+
+/* SpendSignal Design System
+   A premium, serious aesthetic for a "tough love" finance coach
+   Based on Clark Howard's Traffic Light System */
+
+/* Traffic Light Colors - Sacred, never deviate */
+:root {
+  --green-500: #22C55E;
+  --green-600: #16A34A;
+  --green-900: #14532D;
+  --green-glow: rgba(34, 197, 94, 0.3);
+
+  --yellow-500: #EAB308;
+  --yellow-600: #CA8A04;
+  --yellow-900: #713F12;
+  --yellow-glow: rgba(234, 179, 8, 0.3);
+
+  --red-500: #EF4444;
+  --red-600: #DC2626;
+  --red-900: #7F1D1D;
+  --red-glow: rgba(239, 68, 68, 0.3);
+}
+
+/* Dark Theme - Premium, Serious (Default) */
+:root, .dark {
+  --background: #0A0E14;
+  --background-subtle: #0F1419;
+  --background-elevated: #151B23;
+  --background-muted: #1A222D;
+
+  --foreground: #E8ECF0;
+  --foreground-muted: #9BA4B0;
+  --foreground-subtle: #6B7280;
+
+  --border: #2A3441;
+  --border-subtle: #1F2937;
+
+  /* Accent - Deep navy with subtle blue undertone */
+  --accent: #3B82F6;
+  --accent-foreground: #FFFFFF;
+
+  /* Card surfaces */
+  --card: #111820;
+  --card-foreground: #E8ECF0;
+
+  /* Interactive states */
+  --hover: rgba(255, 255, 255, 0.05);
+  --active: rgba(255, 255, 255, 0.1);
+
+  /* Shadows for depth */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-glow-green: 0 0 30px var(--green-glow);
+  --shadow-glow-yellow: 0 0 30px var(--yellow-glow);
+  --shadow-glow-red: 0 0 30px var(--red-glow);
+}
+
+/* Light Theme - Clean, Professional */
+.light {
+  --background: #F8FAFC;
+  --background-subtle: #F1F5F9;
+  --background-elevated: #FFFFFF;
+  --background-muted: #E2E8F0;
+
+  --foreground: #0F172A;
+  --foreground-muted: #475569;
+  --foreground-subtle: #64748B;
+
+  --border: #CBD5E1;
+  --border-subtle: #E2E8F0;
+
+  /* Accent */
+  --accent: #2563EB;
+  --accent-foreground: #FFFFFF;
+
+  /* Card surfaces */
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+
+  /* Interactive states */
+  --hover: rgba(0, 0, 0, 0.03);
+  --active: rgba(0, 0, 0, 0.06);
+
+  /* Shadows for depth */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow-green: 0 0 20px rgba(34, 197, 94, 0.15);
+  --shadow-glow-yellow: 0 0 20px rgba(234, 179, 8, 0.15);
+  --shadow-glow-red: 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Traffic light colors for Tailwind */
+  --color-traffic-green: var(--green-500);
+  --color-traffic-yellow: var(--yellow-500);
+  --color-traffic-red: var(--red-500);
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Premium background with subtle gradient - Dark mode */
+.dark body::before,
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(34, 197, 94, 0.05), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(239, 68, 68, 0.03), transparent);
+  pointer-events: none;
+  z-index: -1;
+  transition: background 0.3s ease;
+}
+
+/* Light mode background */
+.light body::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(34, 197, 94, 0.04), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(239, 68, 68, 0.02), transparent);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--green-500);
+  color: white;
+}
+
+/* Focus styles - accessible but styled */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground-subtle);
+}
+
+/* Traffic Light Zone styling */
+.zone-green {
+  --zone-color: var(--green-500);
+  --zone-bg: var(--green-900);
+  --zone-border: var(--green-600);
+  --zone-glow: var(--green-glow);
+}
+
+.zone-yellow {
+  --zone-color: var(--yellow-500);
+  --zone-bg: var(--yellow-900);
+  --zone-border: var(--yellow-600);
+  --zone-glow: var(--yellow-glow);
+}
+
+.zone-red {
+  --zone-color: var(--red-500);
+  --zone-bg: var(--red-900);
+  --zone-border: var(--red-600);
+  --zone-glow: var(--red-glow);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--zone-glow);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 40px var(--zone-glow);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes traffic-light-sequence {
+  0%, 100% {
+    --green-active: 1;
+    --yellow-active: 0.3;
+    --red-active: 0.3;
+  }
+  33% {
+    --green-active: 0.3;
+    --yellow-active: 1;
+    --red-active: 0.3;
+  }
+  66% {
+    --green-active: 0.3;
+    --yellow-active: 0.3;
+    --red-active: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation-delay: 0.4s; opacity: 0; }
+.stagger-5 { animation-delay: 0.5s; opacity: 0; }
+
+/* Glass effect for cards */
+.glass {
+  background: rgba(17, 24, 32, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--foreground) 0%, var(--foreground-muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-traffic {
+  background: linear-gradient(135deg, var(--green-500) 0%, var(--yellow-500) 50%, var(--red-500) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Button base styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md), 0 0 20px var(--green-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--green-glow);
+}
+
+.btn-secondary {
+  background: var(--background-elevated);
+  color: var(--foreground);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--background-muted);
+  border-color: var(--foreground-subtle);
+}
+
+/* Traffic light indicator */
+.traffic-light {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  background: var(--background-elevated);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+}
+
+.traffic-light-bulb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.traffic-light-bulb.green {
+  background: var(--green-500);
+  box-shadow: 0 0 12px var(--green-glow);
+}
+
+.traffic-light-bulb.yellow {
+  background: var(--yellow-500);
+  box-shadow: 0 0 12px var(--yellow-glow);
+}
+
+.traffic-light-bulb.red {
+  background: var(--red-500);
+  box-shadow: 0 0 12px var(--red-glow);
+}
+
+.traffic-light-bulb.inactive {
+  opacity: 0.2;
+  box-shadow: none;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--foreground-subtle);
+}
+
+/* Drag and drop styles */
+.draggable {
+  cursor: grab;
+  touch-action: none;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+
+.drag-over {
+  border-style: dashed;
+  border-color: var(--zone-color);
+  background: rgba(var(--zone-color), 0.1);
+}
+
+.dragging {
+  opacity: 0.5;
+  transform: rotate(3deg) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+}
+
+/* Responsive container */
+.container-app {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-app {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-app {
+    padding: 0 2rem;
+  }
+}
